@@ -2,6 +2,7 @@ package pl.edu.wszib.savingtheworld.dto;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import pl.edu.wszib.savingtheworld.dao.Podatnik;
 
 import java.util.List;
 
@@ -9,5 +10,6 @@ import java.util.List;
 public interface FakturaDAO extends CrudRepository<Faktura, Long> {
 
     List<Faktura> findAll();
+    List<Faktura> findAllByPodatnik(Podatnik podatnik);
 
 }

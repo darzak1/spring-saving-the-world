@@ -23,19 +23,16 @@ public class InitComponet {
     FakturaDAO fakturaDAO;
 
     @PostConstruct
-    public void init(){
-        IntStream.range(0,10).forEach(i -> {
-                    Faktura faktura = new Faktura(3.5, "cos");
-                    faktura = fakturaDAO.save(faktura);
-                });
+    public void init() {
+        IntStream.range(0, 10).forEach(i -> {
+            Podatnik podatnik = new Podatnik("Adam" + i, "Zak" + i);
+            Podatnik podatnikSaved = podatnikDAO.save(podatnik);
 
-        List<Faktura> wszystkie = fakturaDAO.findAll();
-
-        IntStream.range(0,50).forEach(i -> {
-        Podatnik podatnik = new Podatnik("Adam" + i, "Zak" + i);
-        podatnik.setFaktura(Arrays.asList(wszystkie.get(i % 10), wszystkie.get((i + 5) % 10)));
-        podatnik = podatnikDAO.save(podatnik);
-        podatnik.getImie();
+            IntStream.range(0, 10).forEach(j -> {
+                Faktura faktura = new Faktura(3.5, "cos" + j);
+                faktura.setPodatnik(podatnikSaved);
+                faktura = fakturaDAO.save(faktura);
+            });
         });
 
         System.out.println("");
@@ -43,7 +40,7 @@ public class InitComponet {
     }
 
     @PreDestroy
-    public void teardown(){
+    public void teardown() {
 
     }
 }
